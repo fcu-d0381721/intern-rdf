@@ -43,36 +43,36 @@ public class read {
 					
 					if (all[i][2].equals("null")&cnt==0) { //目前掃到有兩個地址但第一個是null
 						
-//						if(all[j][0].equals(all[j+1][0])){
-//							fw.write("   <rdf:Description rdf:about=\"http://www.linkeddata.com/address#"+all[j][2]+"\">\n");
-//							fw.write("    <feature:has_next rdf:resource=\"http://www.linkeddata.com/address#"+all[j+1][2]+"\"/>\n");
-//							fw.write("    <feature:change_time>"+all[j][5]+"</feature:change_time>\n");
-//							all[i][6] = all[i][6].replaceAll("\n", "");
-//							fw.write("    <feature:type>"+all[i][6]+"</feature:type>\n");
-//							fw.write("   </rdf:Description>\n\n");
-//						}else{
+						if(all[j][0].equals(all[j+1][0])){ //有兩個以上且第一個是null(做第一個而已)
 							fw.write("   <rdf:Description rdf:about=\"http://www.linkeddata.com/address#"+all[j][2]+"\">\n");
-							fw.write("    <feature:change_time>"+all[j][5]+"</feature:change_time>\n");
-							all[j][6] = all[j][6].replaceAll("\n", "");
-							fw.write("    <feature:type>"+all[j][6]+"</feature:type>\n");
+							fw.write("    <feature:has_next rdf:resource=\"http://www.linkeddata.com/address#"+all[j+1][2]+"\"/>\n");
+							fw.write("    <feature:change_time>"+all[i][5]+"</feature:change_time>\n");
+							all[i][6] = all[i][6].replaceAll("\n", "");
+							fw.write("    <feature:type>"+all[i][6]+"</feature:type>\n");
 							fw.write("   </rdf:Description>\n\n");
-//						}
+						}else{ //只有兩個且第一個是null
+							fw.write("   <rdf:Description rdf:about=\"http://www.linkeddata.com/address#"+all[j][2]+"\">\n");
+							fw.write("    <feature:change_time>"+all[i][5]+"</feature:change_time>\n");
+							all[i][6] = all[i][6].replaceAll("\n", "");
+							fw.write("    <feature:type>"+all[i][6]+"</feature:type>\n");
+							fw.write("   </rdf:Description>\n\n");
+						}
 						
 					}else if(all[i][2].equals("null")&cnt>=1){ //有兩個地址以上且第一個值是null
 						if(all[j][0].equals(all[j+1][0])){ //重複地址中的任一個(除最後一個外)
 							fw.write("   <rdf:Description rdf:about=\"http://www.linkeddata.com/address#"+all[j][2]+"\">\n");
 							fw.write("    <feature:has_next rdf:resource=\"http://www.linkeddata.com/address#"+all[j+1][2]+"\"/>\n");
 							fw.write("    <feature:has_pre rdf:resource=\"http://www.linkeddata.com/address#"+all[j-1][2]+"\"/>\n");
-							fw.write("    <feature:change_time>"+all[j][5]+"</feature:change_time>\n");
-							all[j][6] = all[j][6].replaceAll("\n", "");
-							fw.write("    <feature:type>"+all[j][6]+"</feature:type>\n");
+							fw.write("    <feature:change_time>"+all[j-1][5]+"</feature:change_time>\n");
+							all[j-1][6] = all[j-1][6].replaceAll("\n", "");
+							fw.write("    <feature:type>"+all[j-1][6]+"</feature:type>\n");
 							fw.write("   </rdf:Description>\n\n");
 						}else{ //重複地址中的最後一個
 							fw.write("   <rdf:Description rdf:about=\"http://www.linkeddata.com/address#"+all[j][2]+"\">\n");
 							fw.write("    <feature:has_pre rdf:resource=\"http://www.linkeddata.com/address#"+all[j-1][2]+"\"/>\n");
-							fw.write("    <feature:change_time>"+all[j][5]+"</feature:change_time>\n");
-							all[j][6] = all[j][6].replaceAll("\n", "");
-							fw.write("    <feature:type>"+all[j][6]+"</feature:type>\n");
+							fw.write("    <feature:change_time>"+all[j-1][5]+"</feature:change_time>\n");
+							all[j-1][6] = all[j-1][6].replaceAll("\n", "");
+							fw.write("    <feature:type>"+all[j-1][6]+"</feature:type>\n");
 							fw.write("   </rdf:Description>\n\n");
 						}
 					}else if(!all[i][2].equals("null")){ //有兩個或以上但兩個都沒有null
